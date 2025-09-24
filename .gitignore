@@ -1,0 +1,8 @@
+*~
+*.tmp
+/build/**
+/dist/**
+.DS_Store
+.env
+*CLAUDE.md
+portfolio-plan.md
