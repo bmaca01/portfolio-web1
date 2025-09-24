@@ -6,12 +6,11 @@ on:
     paths:
       - 'website/**'  # Only deploy when website files change
       - '.github/workflows/deploy.yml'  # Or workflow itself changes
-    workflow_dispatch:  # Allow manual triggering
+    #workflow_dispatch:  # Allow manual triggering
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
