@@ -1,0 +1,112 @@
+name: Deploy to Home Server (Fixed)
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'website/**'
+      - '.github/workflows/deploy-fixed.yml'
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Install cloudflared
+      run: |
+        # Download and install the latest cloudflared
+        wget -q https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb
+        sudo dpkg -i cloudflared-linux-amd64.deb
+
+        # Verify installation
+        cloudflared --version
+
+    - name: Setup SSH with cloudflared
+      run: |
+        mkdir -p ~/.ssh
+
+        # Write the private key
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
+        chmod 600 ~/.ssh/deploy_key
+
+        # Configure SSH with the correct cloudflared syntax
+        # Note: "cloudflared access ssh" is the correct command (not tcp)
+        cat > ~/.ssh/config <<EOF
+        Host ${{ secrets.SSH_HOST }}
+          ProxyCommand cloudflared access ssh --hostname %h
+          StrictHostKeyChecking no
+          IdentityFile ~/.ssh/deploy_key
+          User ${{ secrets.SSH_USER }}
+          ConnectTimeout 30
+          ServerAliveInterval 60
+        EOF
+
+        chmod 600 ~/.ssh/config
+
+        echo "SSH config created for host: ${{ secrets.SSH_HOST }}"
+
+    - name: Test SSH Connection
+      run: |
+        echo "Testing SSH connection through Cloudflare Tunnel..."
+        ssh -v ${{ secrets.SSH_HOST }} "echo 'Connection successful!' && hostname && whoami" || {
+          echo "Connection failed. Trying with service tokens if available..."
+
+          # If basic connection fails and we have service tokens, try with them
+          if [ -n "${{ secrets.CF_ACCESS_CLIENT_ID }}" ] && [ -n "${{ secrets.CF_ACCESS_CLIENT_SECRET }}" ]; then
+            echo "Retrying with service token authentication..."
+
+            cat > ~/.ssh/config <<EOF
+        Host ${{ secrets.SSH_HOST }}
+          ProxyCommand cloudflared access ssh --hostname %h --id ${{ secrets.CF_ACCESS_CLIENT_ID }} --secret ${{ secrets.CF_ACCESS_CLIENT_SECRET }}
+          StrictHostKeyChecking no
+          IdentityFile ~/.ssh/deploy_key
+          User ${{ secrets.SSH_USER }}
+        EOF
+
+            ssh ${{ secrets.SSH_HOST }} "echo 'Connected with service tokens!' && hostname"
+          else
+            echo "No service tokens configured. Connection failed."
+            echo ""
+            echo "Possible solutions:"
+            echo "1. Add CF_ACCESS_CLIENT_ID and CF_ACCESS_CLIENT_SECRET to GitHub secrets"
+            echo "2. Remove Access policies from your SSH tunnel in Cloudflare"
+            echo "3. Check if SSH is properly exposed through your tunnel"
+            exit 1
+          fi
+        }
+
+    - name: Deploy with rsync
+      run: |
+        echo "Deploying website files..."
+        rsync -avz --delete \
+          -e "ssh" \
+          ./website/ \
+          ${{ secrets.SSH_HOST }}:/var/www/web1-site1/
+
+    - name: Set permissions
+      run: |
+        echo "Setting file permissions..."
+        ssh ${{ secrets.SSH_HOST }} \
+          "sudo chmod -R 755 /var/www/web1-site1 && \
+           sudo chown -R www-data:www-data /var/www/web1-site1"
+
+    - name: Verify deployment
+      run: |
+        echo "Verifying deployment..."
+        ssh ${{ secrets.SSH_HOST }} "ls -la /var/www/web1-site1 | head -10"
+
+    - name: Health check
+      run: |
+        echo "Checking if site is accessible..."
+        # Use the actual domain, not the SSH host
+        response=$(curl -s -o /dev/null -w "%{http_code}" https://benjmacaro.dev)
+        if [ $response -eq 200 ]; then
+          echo "✅ Site is live and responding with HTTP 200"
+        else
+          echo "⚠️  Site returned HTTP $response"
+          echo "This might be normal if DNS hasn't propagated yet"
+        fi
