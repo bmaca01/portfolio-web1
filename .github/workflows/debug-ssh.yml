@@ -1,0 +1,100 @@
+name: Debug SSH Connection
+
+on:
+  workflow_dispatch:  # Manual trigger only
+
+jobs:
+  debug:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check secrets are set
+      run: |
+        echo "=== Checking if secrets exist ==="
+        echo "SSH_HOST is set: ${{ secrets.SSH_HOST != '' }}"
+        echo "SSH_PORT is set: ${{ secrets.SSH_PORT != '' }}"
+        echo "SSH_USER is set: ${{ secrets.SSH_USER != '' }}"
+        echo "SSH_PRIVATE_KEY is set: ${{ secrets.SSH_PRIVATE_KEY != '' }}"
+
+        # Show lengths (not content) for debugging
+        echo ""
+        echo "=== Secret lengths ==="
+        echo "SSH_HOST length: ${{ secrets.SSH_HOST != '' && 'set' || 'not set' }}"
+        if [ -n "${{ secrets.SSH_HOST }}" ]; then
+          echo "SSH_HOST value: ${{ secrets.SSH_HOST }}"
+        fi
+        if [ -n "${{ secrets.SSH_PORT }}" ]; then
+          echo "SSH_PORT value: ${{ secrets.SSH_PORT }}"
+        fi
+        if [ -n "${{ secrets.SSH_USER }}" ]; then
+          echo "SSH_USER value: ${{ secrets.SSH_USER }}"
+        fi
+
+    - name: Test network connectivity
+      run: |
+        echo "=== Testing network connectivity ==="
+        # Test DNS resolution
+        echo "Testing DNS resolution for ${{ secrets.SSH_HOST }}:"
+        nslookup ${{ secrets.SSH_HOST }} || echo "DNS resolution failed"
+
+        # Test port connectivity
+        echo ""
+        echo "Testing port ${{ secrets.SSH_PORT }} connectivity:"
+        timeout 5 bash -c "cat < /dev/null > /dev/tcp/${{ secrets.SSH_HOST }}/${{ secrets.SSH_PORT }}" && echo "Port is open" || echo "Port is closed or unreachable"
+
+    - name: Test SSH key format
+      run: |
+        echo "=== Testing SSH key format ==="
+        mkdir -p ~/.ssh
+
+        # Write the key
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/test_key
+        chmod 600 ~/.ssh/test_key
+
+        # Check file was created
+        echo "Key file created: $(ls -la ~/.ssh/test_key)"
+        echo "Key file size: $(wc -c < ~/.ssh/test_key) bytes"
+        echo "Key file lines: $(wc -l < ~/.ssh/test_key) lines"
+
+        # Check if it's a valid SSH key
+        echo ""
+        echo "Validating key format:"
+        if ssh-keygen -y -f ~/.ssh/test_key > /dev/null 2>&1; then
+          echo "✓ Key format is valid"
+          echo "Key type: $(ssh-keygen -l -f ~/.ssh/test_key | awk '{print $4}')"
+        else
+          echo "✗ Key format is invalid"
+          echo "First line of key file:"
+          head -n 1 ~/.ssh/test_key
+          echo "Last line of key file:"
+          tail -n 1 ~/.ssh/test_key
+        fi
+
+    - name: Test ssh-keyscan
+      run: |
+        echo "=== Testing ssh-keyscan ==="
+        echo "Running: ssh-keyscan -p ${{ secrets.SSH_PORT }} -H ${{ secrets.SSH_HOST }}"
+
+        ssh-keyscan -p ${{ secrets.SSH_PORT }} -H ${{ secrets.SSH_HOST }} 2>&1 || {
+          echo "ssh-keyscan failed with exit code $?"
+          echo ""
+          echo "Trying with timeout:"
+          timeout 10 ssh-keyscan -p ${{ secrets.SSH_PORT }} -H ${{ secrets.SSH_HOST }} 2>&1 || echo "Still failed"
+        }
+
+    - name: Test SSH connection with verbose output
+      run: |
+        echo "=== Testing actual SSH connection ==="
+        mkdir -p ~/.ssh
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
+        chmod 600 ~/.ssh/deploy_key
+
+        # Try to connect with verbose output
+        ssh -vvv -o ConnectTimeout=10 \
+            -o StrictHostKeyChecking=no \
+            -i ~/.ssh/deploy_key \
+            -p ${{ secrets.SSH_PORT }} \
+            ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} \
+            "echo 'Connection successful' && hostname && whoami" || {
+          echo "SSH connection failed with exit code $?"
+        }
