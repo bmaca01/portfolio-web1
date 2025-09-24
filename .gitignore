@@ -1,7 +1,146 @@
-*~
-*.tmp
-/build/**
-/dist/**
-.DS_Store
+# Web1.0 Portfolio Site - Git Ignore File
+
+#######################
+# Environment & Secrets
+#######################
 .env
-portfolio-plan.md
+.env.local
+.env.*.local
+
+# SSH Keys - NEVER commit these!
+*.key
+*.pem
+*_rsa
+*_rsa.pub
+*_ed25519
+*_ed25519.pub
+id_rsa*
+id_ed25519*
+github_deploy_key*
+
+#######################
+# Operating System Files
+#######################
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+.directory
+.Trash-*
+
+#######################
+# Editor Files
+#######################
+
+# VS Code
+.vscode/
+*.code-workspace
+.history/
+
+# Vim
+*.swp
+*.swo
+*.swn
+.netrwhist
+
+# IntelliJ/WebStorm
+.idea/
+*.iml
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+#######################
+# Temporary Files
+#######################
+*.tmp
+*.temp
+*.bak
+*.backup
+tmp/
+temp/
+cache/
+
+#######################
+# Logs
+#######################
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+
+#######################
+# Build Artifacts
+#######################
+/build/
+/dist/
+node_modules/
+
+#######################
+# Project Specific
+#######################
+
+
+# Local development files
+test.html
+test/
+local-notes.txt
+
+# Deployment scripts with credentials
+deploy-local.sh
+sync-local.sh
+
+# Backup files
+backup/
+backups/
+*.backup
+
+# Large source files (keep optimized versions only)
+*.psd
+*.ai
+*.sketch
+*.xcf
+
+# Cloudflare tunnel configs with tokens
+cloudflared-config.yml
+tunnel-config.yml
+*.token
+
+# Server logs if copied locally
+access.log*
+error.log*
+
+#######################
+# Do NOT Ignore
+#######################
+# GitHub Actions workflows
+!.github/workflows/
+
+# All website content
+!website/
+!website/**/*
+
+# Documentation files (NOW tracked in repo)
+!portfolio-plan.md
+!README.md
+!github_actions_setup.md
+
+# But still ignore temp files within website
+website/**/*.tmp
+website/**/*.bak
+website/**/.DS_Store
