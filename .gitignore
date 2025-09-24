@@ -127,6 +127,11 @@ tunnel-config.yml
 access.log*
 error.log*
 
+# Documentation files
+CLAUDE.md
+github_actions_setup.md
+portfolio-plan.md
+
 #######################
 # Do NOT Ignore
 #######################
@@ -138,10 +143,7 @@ error.log*
 !website/**/*
 
 # Documentation files (NOW tracked in repo)
-!portfolio-plan.md
-!CLAUDE.md
 !README.md
-!github_actions_setup.md
 
 # But still ignore temp files within website
 website/**/*.tmp
