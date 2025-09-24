@@ -1,0 +1,54 @@
+name: Deploy to Home Server
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'website/**'  # Only deploy when website files change
+      - '.github/workflows/deploy.yml'  # Or workflow itself changes
+    workflow_dispatch:  # Allow manual triggering
+
+    jobs:
+      deploy:
+        runs-on: ubuntu-latest
+
+        steps:
+          - name: Checkout code
+            uses: actions/checkout@v4
+
+          - name: Setup SSH
+            run: |
+              mkdir -p ~/.ssh
+              echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
+              chmod 600 ~/.ssh/deploy_key
+
+              ssh-keyscan -p ${{ secrets.SSH_PORT }} -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+
+          - name: Test SSH Connection
+            run: |
+              ssh -i ~/.ssh/deploy_key \
+                -p ${{ secrets.SSH_PORT }} \
+                ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} \
+                "echo 'SSH connection successful'"
+
+          - name: Deploy with rsync
+            run: |
+              rsync -avz --delete \
+                -e "ssh -i ~/.ssh/deploy_key -p ${{ secrets.SSH_PORT }}" \
+                ./website/ \
+                ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/var/www/web1-site1/
+
+          - name: Set permissions
+            run: |
+              ssh -i ~/.ssh/deploy_key \
+                -p ${{ secrets.SSH_PORT }} \
+                ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} \
+                "sudo chmod -R 755 /var/www/web1-site1 && sudo chown -R ${{ secrets.SSH_USER }}:www-data /var/www/web1-site1"
+
+          - name: Verify deployment
+            run: |
+              ssh -i ~/.ssh/deploy_key \
+                -p ${{ secrets.SSH_PORT }} \
+                ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} \
+                "ls -la /var/www/web1-site1 | head -10"
+
