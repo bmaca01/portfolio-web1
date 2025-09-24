@@ -6,7 +6,7 @@ on:
     paths:
       - 'website/**'  # Only deploy when website files change
       - '.github/workflows/deploy.yml'  # Or workflow itself changes
-    #workflow_dispatch:  # Allow manual triggering
+    workflow_dispatch:  # Allow manual triggering
 
 jobs:
   deploy:
