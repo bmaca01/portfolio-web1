@@ -1,0 +1,6 @@
+# Ignore counter data file (will be created on server)
+counter.txt
+
+# Ignore IP tracking directory contents
+ips/*
+!ips/.gitkeep
