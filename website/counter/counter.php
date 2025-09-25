@@ -2,7 +2,8 @@
 // Simple file-based visitor counter for Web 1.0 site
 // No sessions, no complex logic - just increment and display
 
-$counterFile = __DIR__ . '/counter.txt';
+// Store counter file outside web directory to survive deployments
+$counterFile = '/var/lib/web1-site1-counter/counter.txt';
 $digitsToShow = 6;
 $startCount = 0;
 
