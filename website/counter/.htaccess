@@ -1,0 +1,14 @@
+# Protect counter data file
+<Files "counter.txt">
+    Order Allow,Deny
+    Deny from all
+</Files>
+
+# Prevent directory listing
+Options -Indexes
+
+# Block access to .git files if any
+<FilesMatch "^\.">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
