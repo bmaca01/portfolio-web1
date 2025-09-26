@@ -1,0 +1,33 @@
+# docker-compose.yml
+version: '3.8'
+
+services:
+  web1-site1:
+    build:
+      context: ./docker
+      dockerfile: Dockerfile
+    container_name: web1-site1-dev
+    ports:
+      - "8084:8084"  # Match production port
+    volumes:
+      # Mount website files for hot-reloading
+      - ./website:/var/www/web1-site1:rw
+      # Persist counter data across container restarts
+      - counter_data:/var/lib/web1-site1-counter
+      # Optional: Mount logs for debugging
+      - ./logs/nginx:/var/log/nginx
+      - ./logs/php:/var/log/php-fpm
+    environment:
+      - ENVIRONMENT=development
+      - TZ=America/New_York
+    restart: unless-stopped
+    networks:
+      - web1_network
+
+volumes:
+  counter_data:
+    driver: local
+
+networks:
+  web1_network:
+    driver: bridge

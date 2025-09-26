@@ -1,0 +1,13 @@
+# .dockerignore
+.git
+.gitignore
+*.md
+.DS_Store
+node_modules
+.env
+.env.*
+logs/
+.github/
+*.swp
+*.swo
+*~
