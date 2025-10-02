@@ -14,13 +14,13 @@ services:
       - ./website:/var/www/web1-site1:rw
       # Persist counter data across container restarts
       - counter_data:/var/lib/web1-site1-counter
-      # Optional: Mount logs for debugging
-      - ./logs/nginx:/var/log/nginx
-      - ./logs/php:/var/log/php-fpm
+      # Optional: Mount logs for debugging (commented out due to permission issues)
+      # - ./logs/nginx:/var/log/nginx
+      # - ./logs/php:/var/log/php-fpm
     environment:
       - ENVIRONMENT=development
       - TZ=America/New_York
-    restart: unless-stopped
+    restart: no
     networks:
       - web1_network
 
