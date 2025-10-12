@@ -14,8 +14,13 @@ RUN apt-get update && apt-get install -y \
     supervisor \
     curl \
     vim \
+    nodejs \
+    npm \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
+
+# Install browser-sync globally for hot-reloading
+RUN npm install -g browser-sync
 
 # Create required directories matching production
 RUN mkdir -p /var/www/web1-site1 \
@@ -36,6 +41,10 @@ COPY nginx/web1-site1.conf /etc/nginx/sites-available/web1-site1
 COPY php/www.conf /etc/php/8.3/fpm/pool.d/www.conf
 COPY supervisor/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY scripts/docker-entrypoint.sh /usr/local/bin/
+
+# Copy browser-sync configuration
+RUN mkdir -p /etc/browser-sync
+COPY bs-config.js /etc/browser-sync/bs-config.js
 
 # Enable nginx site
 RUN ln -sf /etc/nginx/sites-available/web1-site1 /etc/nginx/sites-enabled/ \

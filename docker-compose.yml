@@ -5,10 +5,11 @@ services:
   web1-site1:
     build:
       context: ./docker
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.optimized
     container_name: web1-site1-dev
     ports:
-      - "8084:8084"  # Match production port
+      - "8084:8084"  # Match production port (nginx direct)
+      - "3000:3000"  # Browser-sync with hot-reload
     volumes:
       # Mount website files for hot-reloading
       - ./website:/var/www/web1-site1:rw
@@ -20,6 +21,7 @@ services:
     environment:
       - ENVIRONMENT=development
       - TZ=America/New_York
+      - ENABLE_HOT_RELOAD=true  # Set to false to disable browser-sync
     restart: no
     networks:
       - web1_network

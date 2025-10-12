@@ -1,0 +1,76 @@
+# Optimized Multi-stage Dockerfile for Web 1.0 Development
+# Stage 1: Get Node.js binaries from official image
+FROM node:18-slim AS node
+
+# Stage 2: Build the final image with Ubuntu 24.04 for production parity
+FROM ubuntu:24.04
+
+# Prevent interactive prompts during package installation
+ENV DEBIAN_FRONTEND=noninteractive
+ENV LANG=C.UTF-8
+
+# Install only essential packages (removed nodejs, npm, vim)
+# This reduces from 600+ packages to ~100 packages
+RUN apt-get update && apt-get install -y \
+    nginx \
+    php8.3-fpm \
+    php8.3-cli \
+    php8.3-gd \
+    supervisor \
+    curl \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy Node.js binaries from the official image (avoids 600+ Ubuntu package dependencies)
+COPY --from=node /usr/local/bin/node /usr/local/bin/
+COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
+
+# Create symlinks for npm and npx
+RUN ln -s /usr/local/lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm && \
+    ln -s /usr/local/lib/node_modules/npm/bin/npx-cli.js /usr/local/bin/npx
+
+# Create www-data user if not exists and set proper permissions
+RUN id -u www-data &>/dev/null || useradd -r -s /bin/false www-data && \
+    usermod -a -G users www-data
+
+# Create required directories matching production (combined into single layer)
+RUN mkdir -p /var/www/web1-site1 \
+    /var/lib/web1-site1-counter/ips \
+    /home/deploy \
+    /var/run/php \
+    /var/log/supervisor \
+    /etc/browser-sync
+
+# Copy all configuration files at once (better layer caching)
+COPY nginx/web1-site1.conf /etc/nginx/sites-available/web1-site1
+COPY php/www.conf /etc/php/8.3/fpm/pool.d/www.conf
+COPY supervisor/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY scripts/docker-entrypoint.sh /usr/local/bin/
+COPY bs-config.js /etc/browser-sync/bs-config.js
+COPY bs-config-simple.js /etc/browser-sync/bs-config-simple.js
+
+# Configure nginx and set permissions in a single layer
+RUN ln -sf /etc/nginx/sites-available/web1-site1 /etc/nginx/sites-enabled/ && \
+    rm -f /etc/nginx/sites-enabled/default && \
+    chmod +x /usr/local/bin/docker-entrypoint.sh
+
+# Install browser-sync after configuration files are copied (better cache utilization)
+RUN npm install -g browser-sync --no-fund --no-audit
+
+# Set up counter storage with proper permissions (combined operations)
+RUN chown -R www-data:www-data /var/lib/web1-site1-counter && \
+    chmod 755 /var/lib/web1-site1-counter && \
+    chmod 755 /var/lib/web1-site1-counter/ips && \
+    echo "0" > /var/lib/web1-site1-counter/counter.txt && \
+    chmod 666 /var/lib/web1-site1-counter/counter.txt && \
+    chown www-data:www-data /var/lib/web1-site1-counter/counter.txt
+
+# Expose ports
+EXPOSE 8084 3000
+
+# Set working directory
+WORKDIR /var/www/web1-site1
+
+# Use entrypoint script
+ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]

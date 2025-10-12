@@ -1,25 +1,46 @@
 <?php
 // Simple file-based visitor counter for Web 1.0 site
-// No sessions, no complex logic - just increment and display
+// Tracks unique visitors by IP address (24-hour window)
 
-// Store counter file outside web directory to survive deployments
+// Configuration
 $counterFile = '/var/lib/web1-site1-counter/counter.txt';
+$ipDir = '/var/lib/web1-site1-counter/ips/';
 $digitsToShow = 6;
 $startCount = 0;
+$uniqueWindow = 86400; // 24 hours in seconds
 
 // Initialize counter file if it doesn't exist
 if (!file_exists($counterFile)) {
     file_put_contents($counterFile, $startCount, LOCK_EX);
 }
 
-// Read current count
-$count = (int)file_get_contents($counterFile);
+// Get visitor's IP address
+$visitorIP = $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0';
 
-// Increment
-$count++;
+// Create safe filename from IP (replace dots with underscores)
+$ipFileName = $ipDir . str_replace('.', '_', $visitorIP) . '.txt';
 
-// Write back with file locking to prevent race conditions
-file_put_contents($counterFile, $count, LOCK_EX);
+// Clean up old IP files (older than 24 hours)
+if (is_dir($ipDir)) {
+    $now = time();
+    foreach (glob($ipDir . '*.txt') as $file) {
+        if ($now - filemtime($file) > $uniqueWindow) {
+            @unlink($file);
+        }
+    }
+}
+
+// Check if this IP has visited recently (within last 24 hours)
+if (!file_exists($ipFileName) || (time() - filemtime($ipFileName) > $uniqueWindow)) {
+    // New visitor or returning after 24h - increment counter
+    $count = (int)file_get_contents($counterFile);
+    $count++;
+    file_put_contents($counterFile, $count, LOCK_EX);
+    file_put_contents($ipFileName, date('Y-m-d H:i:s'), LOCK_EX);
+} else {
+    // Existing visitor within 24 hours - just read current count
+    $count = (int)file_get_contents($counterFile);
+}
 
 // Format with leading zeros
 $paddedCount = str_pad($count, $digitsToShow, '0', STR_PAD_LEFT);

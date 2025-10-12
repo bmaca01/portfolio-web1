@@ -1,0 +1,413 @@
+/* ============================================
+   COLOR PALETTE
+   ============================================ */
+:root {
+  --color-bg-page: #fcfaffff;
+  --color-bg-sidebar: #f0e6ffff;
+  --color-text-primary: rgba(41, 47, 50, 1);
+  --color-text-secondary: rgba(41, 47, 50, 0.7);
+  --color-text-muted: rgba(41, 47, 50, 0.5);
+  --color-border-dark: #292f32;
+  --font-family-base: helvetica, arial, sans-serif;
+}
+
+/* ============================================
+   BASE STYLES
+   ============================================ */
+body {
+  background-color: #bdffe0ff;
+  background-color: var(--color-bg-page);
+  /*margin: 200px;*/
+  margin-left: 5em;
+  margin-right: 5em;
+  padding: 0;
+}
+
+font {
+  font-family: helvetica, arial, sans-serif;
+  font-family: var(--font-family-base);
+}
+
+/* ============================================
+   LAYOUT CLASSES
+   ============================================ */
+.main-container {
+  width: 800px;
+  margin-left: 260px;
+}
+
+.content-wrapper {
+  padding: 20px;
+}
+
+.content-header {
+  height: 100px;
+  vertical-align: middle;
+  text-align: left;
+  padding-top: 10px;
+  text-align: center;
+}
+
+/* ============================================
+   TYPOGRAPHY CLASSES
+   ============================================ */
+.page-title {
+  font-size: 64px;
+  color: rgba(41, 47, 50, 1);
+  color: var(--color-text-primary);
+  margin: 0;
+  line-height: 100px;
+}
+
+.section-heading {
+  color: rgba(41, 47, 50, 1);
+  color: var(--color-text-primary);
+  font-size: 32px;
+}
+
+.body-text {
+  color: rgba(41, 47, 50, 1);
+  color: var(--color-text-primary);
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.small-text {
+  color: rgba(41, 47, 50, 1);
+  color: var(--color-text-primary);
+  font-size: 14px;
+}
+
+.tiny-text {
+  color: rgba(41, 47, 50, 1);
+  color: var(--color-text-primary);
+  font-size: 12px;
+}
+
+.text-muted {
+  color: rgba(41, 47, 50, 0.5);
+  color: var(--color-text-muted);
+}
+
+.text-secondary {
+  color: rgba(41, 47, 50, 0.7);
+  color: var(--color-text-secondary);
+}
+
+/* Standard text color for table cells, lists, etc. */
+.text-primary {
+  color: rgba(41, 47, 50, 1);
+  color: var(--color-text-primary);
+}
+
+/* ============================================
+   SIDEBAR NAVIGATION
+   ============================================ */
+.sidebar {
+  position: sticky;
+  float: left;
+  top: 15vh;
+  width: 200px;
+  background-color: #a8e6cf;
+  background-color: var(--color-bg-sidebar);
+  border: 3px solid #292f32;
+  border: 3px solid var(--color-border-dark);
+  padding: 15px;
+  margin-top: 0;
+  margin-bottom: 30px;
+  margin-left: 20px;
+  margin-right: 30px;
+  font-family: helvetica, arial, sans-serif;
+  font-family: var(--font-family-base);
+  box-shadow: 4px 4px 0px rgba(0,0,0,0.2);
+  z-index: 1000;
+}
+
+.sidebar-bio {
+  text-align: center;
+  margin-bottom: 15px;
+  border-bottom: 2px solid #292f32;
+  border-bottom: 2px solid var(--color-border-dark);
+  padding-bottom: 15px;
+}
+
+.sidebar-name {
+  font-size: 20px;
+  color: #292f32;
+  color: var(--color-border-dark);
+  font-weight: bold;
+}
+
+.sidebar-title {
+  font-size: 14px;
+  color: #292f32;
+  color: var(--color-border-dark);
+}
+
+.sidebar-tagline {
+  font-size: 12px;
+  color: rgba(41, 47, 50, 0.7);
+  color: var(--color-text-secondary);
+  font-style: italic;
+}
+
+.sidebar-nav {
+  margin-bottom: 15px;
+}
+
+.nav-link {
+  text-decoration: none;
+  font-family: helvetica, arial, sans-serif;
+  font-family: var(--font-family-base);
+  font-size: 16px;
+  color: #292f32;
+  color: var(--color-border-dark);
+  display: block;
+  padding: 5px 0;
+}
+
+.nav-link-active {
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.sidebar-footer {
+  text-align: center;
+  border-top: 2px solid #292f32;
+  border-top: 2px solid var(--color-border-dark);
+  padding-top: 10px;
+  color: #292f32;
+  color: var(--color-border-dark);
+}
+
+/* ============================================
+   FORM ELEMENTS
+   ============================================ */
+fieldset {
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+
+.form-input,
+.form-textarea,
+.form-select {
+  font-family: helvetica, arial, sans-serif;
+  font-family: var(--font-family-base);
+  padding: 5px;
+}
+
+.form-button {
+  font-family: helvetica, arial, sans-serif;
+  font-family: var(--font-family-base);
+  font-size: 16px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.form-label {
+  color: rgba(41, 47, 50, 1);
+  color: var(--color-text-primary);
+}
+
+/* ============================================
+   TABLE STYLES
+   ============================================ */
+.info-table td {
+  color: rgba(41, 47, 50, 1);
+  color: var(--color-text-primary);
+}
+
+.content-table {
+  width: 100%;
+}
+
+.guestbook-entry {
+  margin-bottom: 20px;
+}
+
+/* ============================================
+   LINK STYLES
+   ============================================ */
+a {
+  color: #292f32;
+  color: var(--color-border-dark);
+}
+
+.link-plain {
+  text-decoration: none;
+}
+
+.enter-link {
+  text-decoration: none;
+}
+
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.align-center {
+  align: center;
+}
+
+.valign-middle {
+  vertical-align: middle;
+}
+
+.valign-top {
+  valign: top;
+}
+
+/* Spacing utilities */
+.mb-20 {
+  margin-bottom: 20px;
+}
+
+.mb-15 {
+  margin-bottom: 15px;
+}
+
+/* ============================================
+   INDEX PAGE SPECIFIC
+   ============================================ */
+.splash-container {
+  width: 800px;
+  height: 400px;
+  vertical-align: middle;
+}
+
+.enter-title {
+  font-size: 64px;
+  color: rgba(41, 47, 50, 1);
+  color: var(--color-text-primary);
+  margin: 0;
+  text-align: center;
+}
+
+.last-updated {
+  font-size: 2;
+  color: rgba(41, 47, 50, 0.5);
+  color: var(--color-text-muted);
+}
+
+/* ============================================
+   COMPONENT SPECIFIC STYLES
+   ============================================ */
+
+/* Lists */
+ul.text-primary,
+ul.body-text {
+  color: rgba(41, 47, 50, 1);
+  color: var(--color-text-primary);
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+/* Strong/Bold text */
+strong.text-primary {
+  color: rgba(41, 47, 50, 1);
+  color: var(--color-text-primary);
+}
+
+/* Paragraphs inside tables */
+p.text-primary {
+  color: rgba(41, 47, 50, 1);
+  color: var(--color-text-primary);
+}
+
+/* Table cells */
+td.text-primary {
+  color: rgba(41, 47, 50, 1);
+  color: var(--color-text-primary);
+}
+
+/* ============================================
+   MOBILE SIDEBAR TOGGLE (Checkbox Hack)
+   ============================================ */
+.sidebar-toggle-input {
+  display: none;
+}
+
+.sidebar-toggle-btn {
+  display: none;
+}
+
+/* ============================================
+   RESPONSIVE LAYOUT FOR NARROW SCREENS
+   ============================================ */
+/* Intermediate viewport: remove sidebar top spacing and reduce header height */
+@media screen and (max-width: 1285px) {
+  .sidebar {
+    position: sticky;
+    top: 0; /* Remove the 15vh offset completely */
+    margin-top: 20px; /* Add small margin instead */
+  }
+
+  .main-container {
+    margin-top: 0 !important; /* Pull content to top to eliminate gap */
+    margin-left: 260px;
+  }
+
+  .content-header {
+    height: 40px !important; /* Force smaller height */
+    max-height: 40px !important; /* Override table cell minimum height */
+    padding-top: 0 !important; /* Remove top padding */
+  }
+
+  .page-title {
+    line-height: 40px; /* Match the reduced header height */
+    font-size: 48px; /* Reduce from 64px to fit smaller space */
+  }
+}
+
+@media screen and (max-width: 1100px) {
+  /* Show the toggle button on mobile */
+  .sidebar-toggle-btn {
+    display: block;
+    cursor: pointer;
+    padding: 15px;
+    margin: 10px auto 0 auto;
+    max-width: 200px;
+    text-align: center;
+    background-color: #f0e6ffff;
+    background-color: var(--color-bg-sidebar);
+    border: 3px solid #292f32;
+    border: 3px solid var(--color-border-dark);
+    box-shadow: 4px 4px 0px rgba(0,0,0,0.2);
+    font-family: helvetica, arial, sans-serif;
+    font-family: var(--font-family-base);
+  }
+
+  /* Hide sidebar by default on mobile */
+  .sidebar {
+    display: none;
+    position: absolute;
+    top: 60px; /* Position below the menu button */
+    left: 50%;
+    transform: translateX(-50%); /* Center horizontally */
+    width: 200px;
+    z-index: 2000; /* Overlay above content */
+    margin: 0;
+  }
+
+  /* Show sidebar when checkbox is checked */
+  #sidebar-toggle:checked ~ .sidebar {
+    display: block;
+  }
+
+  .main-container {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
