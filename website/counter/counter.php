@@ -15,7 +15,26 @@ if (!file_exists($counterFile)) {
 }
 
 // Get visitor's IP address
-$visitorIP = $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0';
+// Check Cloudflare headers first (site is behind Cloudflare Tunnel)
+if (!empty($_SERVER['HTTP_CF_CONNECTING_IP'])) {
+    // Cloudflare's real client IP (most reliable)
+    $visitorIP = $_SERVER['HTTP_CF_CONNECTING_IP'];
+} elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+    // X-Forwarded-For header (get first IP in chain)
+    $forwardedIPs = explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']);
+    $visitorIP = trim($forwardedIPs[0]);
+} elseif (!empty($_SERVER['HTTP_X_REAL_IP'])) {
+    // X-Real-IP header
+    $visitorIP = $_SERVER['HTTP_X_REAL_IP'];
+} else {
+    // Fallback to REMOTE_ADDR (will be 127.0.0.1 behind tunnel)
+    $visitorIP = $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0';
+}
+
+// Validate IP address format
+if (!filter_var($visitorIP, FILTER_VALIDATE_IP)) {
+    $visitorIP = '0.0.0.0';
+}
 
 // Create safe filename from IP (replace dots with underscores)
 $ipFileName = $ipDir . str_replace('.', '_', $visitorIP) . '.txt';
