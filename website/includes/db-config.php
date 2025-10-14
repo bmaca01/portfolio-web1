@@ -15,7 +15,7 @@ if ($environment === 'development') {
     $db_port = getenv('DB_PORT') ?: 3306;
 } else {
     // Production: Include external credentials file (NOT in git)
-    $credentials_file = '/home/abc/web1-site1-config/db-credentials.php';
+    $credentials_file = '/var/www/web1-site1-config/db-credentials.php';
 
     if (!file_exists($credentials_file)) {
         error_log("Production database credentials file not found: $credentials_file");
