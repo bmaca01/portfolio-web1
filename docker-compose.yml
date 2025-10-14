@@ -22,12 +22,41 @@ services:
       - ENVIRONMENT=development
       - TZ=America/New_York
       - ENABLE_HOT_RELOAD=true  # Set to false to disable browser-sync
+      # Database credentials (for development only)
+      - DB_HOST=mysql
+      - DB_NAME=guestbook
+      - DB_USER=guestbook_user
+      - DB_PASSWORD=guestbook_dev_pass
+      - DB_PORT=3306
     restart: no
     networks:
       - web1_network
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql:8.0
+    container_name: web1-mysql-dev
+    environment:
+      MYSQL_ROOT_PASSWORD: dev_root_password
+      MYSQL_DATABASE: guestbook
+      MYSQL_USER: guestbook_user
+      MYSQL_PASSWORD: guestbook_dev_pass
+    ports:
+      - "127.0.0.1:3307:3306"  # Use 3307 to avoid conflict with production
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./database/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+      - ./database/init-dev.sql:/docker-entrypoint-initdb.d/02-init-dev.sql:ro
+    restart: no
+    networks:
+      - web1_network
+    command: --default-authentication-plugin=mysql_native_password
 
 volumes:
   counter_data:
+    driver: local
+  mysql_data:
     driver: local
 
 networks:

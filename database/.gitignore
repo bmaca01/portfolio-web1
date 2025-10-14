@@ -1,0 +1,5 @@
+# Ignore production database credentials and backups
+*credentials*.php
+*.sql.gz
+backups/
+*.backup

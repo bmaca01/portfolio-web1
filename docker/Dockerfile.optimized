@@ -16,6 +16,7 @@ RUN apt-get update && apt-get install -y \
     php8.3-fpm \
     php8.3-cli \
     php8.3-gd \
+    php8.3-mysql \
     supervisor \
     curl \
     && apt-get clean \
