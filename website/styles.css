@@ -17,9 +17,6 @@
 body {
   background-color: #bdffe0ff;
   background-color: var(--color-bg-page);
-  /*margin: 200px;*/
-  margin-left: 5em;
-  margin-right: 5em;
   padding: 0;
 }
 
@@ -28,12 +25,18 @@ font {
   font-family: var(--font-family-base);
 }
 
+
 /* ============================================
    LAYOUT CLASSES
    ============================================ */
 .main-container {
-  width: 800px;
-  margin-left: 260px;
+  margin-left: 250px; /* Space for sidebar */
+  margin-right: 20px;
+  padding: 20px;
+  max-width: 800px;
+  font-family: helvetica, arial, sans-serif;
+  font-family: var(--font-family-base);
+  line-height: 1.6;
 }
 
 .content-wrapper {
@@ -100,12 +103,12 @@ font {
   color: var(--color-text-primary);
 }
 
+
 /* ============================================
    SIDEBAR NAVIGATION
    ============================================ */
 .sidebar {
-  position: sticky;
-  float: left;
+  position: fixed;
   top: 15vh;
   width: 200px;
   background-color: #a8e6cf;
@@ -258,7 +261,9 @@ a {
 }
 
 .align-center {
-  align: center;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .valign-middle {
@@ -266,7 +271,7 @@ a {
 }
 
 .valign-top {
-  valign: top;
+  vertical-align: top;
 }
 
 /* Spacing utilities */
@@ -296,7 +301,6 @@ a {
 }
 
 .last-updated {
-  font-size: 2;
   color: rgba(41, 47, 50, 0.5);
   color: var(--color-text-muted);
 }
@@ -341,34 +345,6 @@ td.text-primary {
 
 .sidebar-toggle-btn {
   display: none;
-}
-
-/* ============================================
-   RESPONSIVE LAYOUT FOR NARROW SCREENS
-   ============================================ */
-/* Intermediate viewport: remove sidebar top spacing and reduce header height */
-@media screen and (max-width: 1285px) {
-  .sidebar {
-    position: sticky;
-    top: 0; /* Remove the 15vh offset completely */
-    margin-top: 20px; /* Add small margin instead */
-  }
-
-  .main-container {
-    margin-top: 0 !important; /* Pull content to top to eliminate gap */
-    margin-left: 260px;
-  }
-
-  .content-header {
-    height: 40px !important; /* Force smaller height */
-    max-height: 40px !important; /* Override table cell minimum height */
-    padding-top: 0 !important; /* Remove top padding */
-  }
-
-  .page-title {
-    line-height: 40px; /* Match the reduced header height */
-    font-size: 48px; /* Reduce from 64px to fit smaller space */
-  }
 }
 
 @media screen and (max-width: 1100px) {

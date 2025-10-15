@@ -15,19 +15,20 @@
 </head>
 
 <body>
-  <?php include 'includes/sidebar-nav.php'; ?>
 
+  <?php include 'includes/sidebar-nav.php'; ?>
   <!-- Main Container -->
-  <table class="main-container" width="800" cellpadding="0" cellspacing="0">
-    <tr>
-      <td class="content-header" align="center" height="100">
-        <font face="helvetica">
-          <h1 class="page-title">
-            <?php echo isset($pageTitle) ? $pageTitle : 'benjmacaro.dev'; ?>
-          </h1>
-        </font>
-      </td>
-    </tr>
-    <tr>
-      <td class="content-wrapper">
-        <font face="helvetica">
+  <div class="main-container">
+    <table cellpadding="0" cellspacing="0">
+      <tr>
+        <td class="content-header" align="center" height="100">
+          <font face="helvetica">
+            <h1 class="page-title">
+              <?php echo isset($pageTitle) ? $pageTitle : 'benjmacaro.dev'; ?>
+            </h1>
+          </font>
+        </td>
+      </tr>
+      <tr>
+        <td class="content-wrapper">
+          <font face="helvetica">

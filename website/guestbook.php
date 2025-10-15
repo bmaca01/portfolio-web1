@@ -4,23 +4,19 @@ $htmlTitle = 'benjmacaro.dev - guestbook';
 $metaDescription = 'Sign my guestbook!';
 $metaKeywords = 'guestbook, visitor signatures, comments, web 1.0';
 
-// Include database configuration
 require_once 'includes/db-config.php';
 
-// Initialize variables
 $success_message = '';
 $error_message = '';
 
 // Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_entry'])) {
-    // Get and sanitize input
     $name = trim($_POST['name'] ?? '');
     $email = trim($_POST['email'] ?? '');
     $homepage = trim($_POST['homepage'] ?? '');
     $location = trim($_POST['location'] ?? '');
     $message = trim($_POST['message'] ?? '');
 
-    // Get visitor's IP address (same method as counter.php)
     if (!empty($_SERVER['HTTP_CF_CONNECTING_IP'])) {
         $visitor_ip = $_SERVER['HTTP_CF_CONNECTING_IP'];
     } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
@@ -32,12 +28,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_entry'])) {
         $visitor_ip = $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0';
     }
 
-    // Validate IP address
     if (!filter_var($visitor_ip, FILTER_VALIDATE_IP)) {
         $visitor_ip = '0.0.0.0';
     }
 
-    // Validation
     $errors = [];
 
     if (empty($name) || strlen($name) < 2) {
@@ -54,17 +48,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_entry'])) {
         $errors[] = "Message must be less than 1000 characters";
     }
 
-    // Optional email validation
     if (!empty($email) && !filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $errors[] = "Invalid email address";
     }
 
-    // Optional homepage validation (basic)
     if (!empty($homepage)) {
         if (strlen($homepage) > 255) {
             $errors[] = "Homepage URL too long";
         }
-        // Add http:// if missing
         if (!preg_match("~^(?:f|ht)tps?://~i", $homepage)) {
             $homepage = "http://" . $homepage;
         }
@@ -74,7 +65,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_entry'])) {
         $errors[] = "Location must be less than 100 characters";
     }
 
-    // If no errors, insert into database
     if (empty($errors)) {
         $stmt = $mysqli->prepare("INSERT INTO entries (name, email, homepage, location, message, ip_address) VALUES (?, ?, ?, ?, ?, ?)");
 
@@ -83,7 +73,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_entry'])) {
 
             if ($stmt->execute()) {
                 $success_message = "Thank you for signing my guestbook!";
-                // Clear form data
                 $name = $email = $homepage = $location = $message = '';
             } else {
                 $error_message = "Sorry, there was an error saving your entry. Please try again.";
@@ -115,7 +104,6 @@ if ($result) {
 include 'includes/page-header.php';
 ?>
 
-<!-- Success/Error Messages -->
 <?php if (!empty($success_message)): ?>
     <p style="color: #00ff00; background: #003300; padding: 10px; border: 2px solid #00ff00; text-align: center;">
         <strong><?php echo htmlspecialchars($success_message); ?></strong>
@@ -130,7 +118,6 @@ include 'includes/page-header.php';
     <br>
 <?php endif; ?>
 
-<!-- Sign Guestbook Form -->
 <h2 class="section-heading">Sign My Guestbook!</h2>
 
 <form action="guestbook.php" method="post" name="guestbook">
@@ -232,7 +219,6 @@ include 'includes/page-header.php';
 </p>
 
 <?php
-// Close database connection
 $mysqli->close();
 include 'includes/page-footer.php';
 ?>
