@@ -105,7 +105,7 @@ include 'includes/page-header.php';
 <h1 id="compilers" class="section-heading">Formal languages, Interpreters, Compilers</h1>
 <hr>
 <h2 class="section-heading">
-    <a href="#">DPDA Simulator</a>
+    <a href="https://github.com/bmaca01/dpda">DPDA Simulator</a>
 </h2>
 <p class="body-text">
     <strong>Type:</strong> Full Stack Application, Web API, CLI App<br>
@@ -131,7 +131,7 @@ include 'includes/page-header.php';
 <br>
 
 <h2 class="section-heading">
-    <a href="#">Type Checker</a>
+    <a href="https://github.com/bmaca01/cool-typecheck">Type Checker</a>
 </h2>
 <p class="body-text">
     <strong>Type:</strong> Compiler Module<br>
@@ -156,7 +156,7 @@ include 'includes/page-header.php';
 <br>
 
 <h2 class="section-heading">
-    <a href="#">Pascal-like Language Interpreter</a>
+    <a href="https://github.com/bmaca01/cpp-interpreter">Pascal-like Language Interpreter</a>
 </h2>
 <p class="body-text">
     <strong>Type:</strong> CLI REPL / Interpreter<br>
@@ -198,7 +198,7 @@ include 'includes/page-header.php';
         </td>
         <td width="33%" valign="top"> 
             <strong class="text-primary">
-                <a href="#">Canvas subscriber client</a>
+                <a href="https://github.com/bmaca01/canvas-subscriber">Canvas subscriber client</a>
             </strong><br>
             <p class="text-primary">Python client implementing Canvas API to automatically download files from enrolled courses</p>
         </td>

@@ -33,13 +33,11 @@
           <a href="links.php" class="nav-link <?php echo (isset($currentPage) && $currentPage === 'links') ? 'nav-link-active' : ''; ?>">▸ Links</a>
         </td>
       </tr>
-      <!-- TODO
       <tr>
         <td class="text-left">
           <a href="guestbook.php" class="nav-link <?php echo (isset($currentPage) && $currentPage === 'guestbook') ? 'nav-link-active' : ''; ?>">▸ Guestbook</a>
         </td>
       </tr>
-      -->
       <tr>
         <td class="text-left">
           <a href="contact.php" class="nav-link <?php echo (isset($currentPage) && $currentPage === 'contact') ? 'nav-link-active' : ''; ?>">▸ Contact</a>
