@@ -107,6 +107,7 @@ include 'includes/page-header.php';
 <h2 class="section-heading">
     <a href="https://github.com/bmaca01/dpda">DPDA Simulator</a>
 </h2>
+<em><a href="https://dpda.benjmacaro.dev">demo</a></em>
 <p class="body-text">
     <strong>Type:</strong> Full Stack Application, Web API, CLI App<br>
 </p>
