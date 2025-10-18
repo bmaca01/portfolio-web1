@@ -20,7 +20,7 @@
     <table width="100%" cellpadding="5" cellspacing="0" border="0">
       <tr>
         <td class="text-left">
-          <a href="home.php" class="nav-link <?php echo (isset($currentPage) && $currentPage === 'home') ? 'nav-link-active' : ''; ?>">▸ Home/About</a>
+          <a href="index.php" class="nav-link <?php echo (isset($currentPage) && $currentPage === 'home') ? 'nav-link-active' : ''; ?>">▸ Home/About</a>
         </td>
       </tr>
       <tr>
