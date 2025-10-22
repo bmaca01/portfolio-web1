@@ -187,9 +187,11 @@ include 'includes/page-header.php';
     <tr>
         <td width="33%" valign="top">
             <strong class="text-primary">
-                <a href="https://operating-system-in-1000-lines.vercel.app/en/">OS Kernel Development</a>
+                <a href="https://github.com/bmaca01/OS_1000_lines">OS Kernel Development</a>
             </strong><br>
-            <p class="text-primary">Learning RISC-V assembly and applying principles of multi-process operating systems</p>
+            <p class="text-primary">Refactored a minimal RISC-V operating system kernel from monolithic code into six focused
+  modules (memory, I/O, filesystem, scheduler, trap handler). The kernel implements virtual memory, process isolation, VirtIO
+  block device driver, and system call interface.</p>
         </td>
         <td width="33%" valign="top"> 
             <strong class="text-primary">
