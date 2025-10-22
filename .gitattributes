@@ -1,0 +1,43 @@
+# Git attributes file - ensures consistent line endings across platforms
+
+# Auto-detect text files and normalize line endings to LF on commit
+* text=auto
+
+# Shell scripts must always use LF (Unix) line endings
+*.sh text eol=lf
+
+# PHP files should use LF
+*.php text eol=lf
+
+# SQL files should use LF
+*.sql text eol=lf
+
+# Config files should use LF
+*.conf text eol=lf
+*.config text eol=lf
+
+# Docker files should use LF
+Dockerfile* text eol=lf
+*.dockerfile text eol=lf
+
+# JavaScript/Node files should use LF
+*.js text eol=lf
+*.json text eol=lf
+
+# CSS should use LF
+*.css text eol=lf
+
+# Markdown should use LF
+*.md text eol=lf
+
+# Windows batch files should use CRLF
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# Binary files (don't modify these)
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.pdf binary
