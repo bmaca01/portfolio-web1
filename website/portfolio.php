@@ -77,7 +77,7 @@ include 'includes/page-header.php';
 </p>
 
 <h2 class="section-heading">
-    <a href="#">Personal Blog <em style="font-size: 10pt">(this site!)</em></a>
+    <a href="https://benjmacaro.dev/blog/">Personal Blog <em style="font-size: 10pt">(this site!)</em></a>
 </h2>
 <p class="body-text">
     <strong>Type:</strong> Full Stack Application, CMS<br>
@@ -86,12 +86,11 @@ include 'includes/page-header.php';
     A personal blogging platform with markdown support and a custom CMS.
 </p>
 <p class="body-text">
-    Planned Features:
+    Features:
     <ul>
         <li>Markdown-based blog posts</li>
         <li>Custom CMS for post management</li>
         <li>Responsive design</li>
-        <li>SEO optimization</li>
     </ul>
 </p>
 <p class="body-text">
