@@ -18,7 +18,7 @@ include 'includes/page-header.php';
     For now, it is a web1.0 inspired portfolio site. I think old web design is neat.
   </p>
   <p class="body-text">
-    I'm finishing my final sem of uni. I enjoy coding and listening to people's opinions about tech and learning new technologies.
+    I<s>'m finishing</s> finished my final sem of uni. I enjoy coding, listening to people's opinions about tech, and learning new technologies.
   </p>
   <p class="body-text">
     I am looking for professional opportunities and am open to freelance work. Please feel free to peruse my portfolio / projects and don't hesitate to reach out. Aside from professional things, this site is intended to be a silly thing. I like silly and whimsical things.
@@ -43,7 +43,7 @@ include 'includes/page-header.php';
   </tr>
   <tr>
     <td class="text-primary"><strong>Current Job:</strong></td>
-    <td class="text-primary">PC Lab & Delivery Tech @ NJIT</td>
+    <td class="text-primary">Looking for work</td>
   </tr>
   <tr>
     <td class="text-primary"><strong>Current OS:</strong></td>
@@ -95,6 +95,7 @@ include 'includes/page-header.php';
 
 <h2 class="section-heading">Current Interests</h2>
 <ul class="body-text">
+    <li>FPGAs, hardware verification, retro game preservation</li>
     <li>Operating System Development</li>
     <li>Low-level programming (C, C++, Assembly)</li>
     <li>Homelabbing</li>
