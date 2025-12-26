@@ -20,40 +20,34 @@
     <table width="100%" cellpadding="5" cellspacing="0" border="0">
       <tr>
         <td class="text-left">
-          <a href="index.php" class="nav-link <?php echo (isset($currentPage) && $currentPage === 'home') ? 'nav-link-active' : ''; ?>">▸ Home/About</a>
+          <a href="/index.php" class="nav-link <?php echo (isset($currentPage) && $currentPage === 'home') ? 'nav-link-active' : ''; ?>">▸ Home/About</a>
         </td>
       </tr>
       <tr>
         <td class="text-left">
-          <a href="portfolio.php" class="nav-link <?php echo (isset($currentPage) && $currentPage === 'portfolio') ? 'nav-link-active' : ''; ?>">▸ Projects/Skills</a>
+          <a href="/portfolio.php" class="nav-link <?php echo (isset($currentPage) && $currentPage === 'portfolio') ? 'nav-link-active' : ''; ?>">▸ Projects/Skills</a>
         </td>
       </tr>
       <tr>
         <td class="text-left">
-          <a href="links.php" class="nav-link <?php echo (isset($currentPage) && $currentPage === 'links') ? 'nav-link-active' : ''; ?>">▸ Links</a>
+          <a href="/links.php" class="nav-link <?php echo (isset($currentPage) && $currentPage === 'links') ? 'nav-link-active' : ''; ?>">▸ Links</a>
         </td>
       </tr>
       <tr>
         <td class="text-left">
-          <a href="guestbook.php" class="nav-link <?php echo (isset($currentPage) && $currentPage === 'guestbook') ? 'nav-link-active' : ''; ?>">▸ Guestbook</a>
+          <a href="/guestbook.php" class="nav-link <?php echo (isset($currentPage) && $currentPage === 'guestbook') ? 'nav-link-active' : ''; ?>">▸ Guestbook</a>
         </td>
       </tr>
       <tr>
         <td class="text-left">
-          <a href="contact.php" class="nav-link <?php echo (isset($currentPage) && $currentPage === 'contact') ? 'nav-link-active' : ''; ?>">▸ Contact</a>
+          <a href="/blog/" class="nav-link <?php echo (isset($currentPage) && $currentPage === 'blog') ? 'nav-link-active' : ''; ?>">▸ Blog</a>
         </td>
       </tr>
-      <!-- TODO
-      </tr>
+      <tr>
         <td class="text-left">
-          <a 
-            href="contact.php" 
-            class="nav-link <?php echo (isset($currentPage) && $currentPage === 'blog') ? 'nav-link-active' : ''; ?>"
-          >
-            ▸ Blog</a>
+          <a href="/contact.php" class="nav-link <?php echo (isset($currentPage) && $currentPage === 'contact') ? 'nav-link-active' : ''; ?>">▸ Contact</a>
         </td>
       </tr>
-      -->
     </table>
   </div>
 

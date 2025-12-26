@@ -4,19 +4,19 @@
   <title><?php echo isset($htmlTitle) ? $htmlTitle : 'benjmacaro.dev'; ?></title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
   <?php if (isset($metaDescription)): ?>
-  <meta name="description" content="<?php echo $metaDescription; ?>">
+  <meta name="description" content="<?php echo htmlspecialchars($metaDescription, ENT_QUOTES, 'UTF-8'); ?>">
   <?php endif; ?>
   <?php if (isset($metaKeywords)): ?>
-  <meta name="keywords" content="<?php echo $metaKeywords; ?>">
+  <meta name="keywords" content="<?php echo htmlspecialchars($metaKeywords, ENT_QUOTES, 'UTF-8'); ?>">
   <?php endif; ?>
   <meta name="author" content="Ben Macaro">
   <meta name="robots" content="index, follow">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="/styles.css">
 </head>
 
 <body>
 
-  <?php include 'includes/sidebar-nav.php'; ?>
+  <?php include __DIR__ . '/sidebar-nav.php'; ?>
   <!-- Main Container -->
   <div class="main-container">
     <table cellpadding="0" cellspacing="0">

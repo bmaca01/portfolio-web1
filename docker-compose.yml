@@ -13,6 +13,10 @@ services:
     volumes:
       # Mount website files for hot-reloading
       - ./website:/var/www/web1-site1:rw
+      # Mount vendor directory for Composer dependencies (PHPMailer, etc.)
+      - ./vendor:/var/www/vendor:ro
+      # Symlink for Composer autoload paths (expects website/ sibling to vendor/)
+      - ./website:/var/www/website:ro
       # Persist counter data across container restarts
       - counter_data:/var/lib/web1-site1-counter
       # Optional: Mount logs for debugging (commented out due to permission issues)
@@ -28,6 +32,14 @@ services:
       - DB_USER=guestbook_user
       - DB_PASSWORD=guestbook_dev_pass
       - DB_PORT=3306
+      # SMTP configuration (optional - email disabled if not set)
+      - SMTP_HOST=${SMTP_HOST:-}
+      - SMTP_PORT=${SMTP_PORT:-587}
+      - SMTP_USER=${SMTP_USER:-}
+      - SMTP_PASSWORD=${SMTP_PASSWORD:-}
+      - SMTP_FROM=${SMTP_FROM:-noreply@benjmacaro.dev}
+      - SMTP_FROM_NAME=${SMTP_FROM_NAME:-benjmacaro.dev Contact Form}
+      - CONTACT_EMAIL=${CONTACT_EMAIL:-info@benjmacaro.dev}
     restart: no
     networks:
       - web1_network
@@ -47,7 +59,8 @@ services:
     volumes:
       - mysql_data:/var/lib/mysql
       - ./database/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
-      - ./database/init-dev.sql:/docker-entrypoint-initdb.d/02-init-dev.sql:ro
+      - ./database/blog-schema.sql:/docker-entrypoint-initdb.d/02-blog-schema.sql:ro
+      - ./database/init-dev.sql:/docker-entrypoint-initdb.d/03-init-dev.sql:ro
     restart: no
     networks:
       - web1_network

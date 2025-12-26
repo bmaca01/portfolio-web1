@@ -1,7 +1,14 @@
 <?php
 $environment = getenv('ENVIRONMENT') ?: 'production';
 
-if ($environment === 'development') {
+if ($environment === 'testing') {
+    // Testing environment - use environment variables, defer connection to tests
+    $db_host = getenv('DB_HOST') ?: 'mysql-test';
+    $db_name = getenv('DB_NAME') ?: 'blog_test';
+    $db_user = getenv('DB_USER') ?: 'test_user';
+    $db_pass = getenv('DB_PASSWORD') ?: 'test_password';
+    $db_port = getenv('DB_PORT') ?: 3306;
+} elseif ($environment === 'development') {
     $db_host = getenv('DB_HOST') ?: 'mysql';
     $db_name = getenv('DB_NAME') ?: 'guestbook';
     $db_user = getenv('DB_USER') ?: 'guestbook_user';
