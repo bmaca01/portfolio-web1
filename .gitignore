@@ -146,3 +146,8 @@ portfolio-plan.md
 website/**/*.tmp
 website/**/*.bak
 website/**/.DS_Store
+
+vendor/*
+tests/*
+.phpunit*
+screenshots/*
