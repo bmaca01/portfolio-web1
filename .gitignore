@@ -151,3 +151,5 @@ vendor/*
 tests/*
 .phpunit*
 screenshots/*
+blog/images/*
+!blog/images/.gitkeep
