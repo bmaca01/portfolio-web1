@@ -102,6 +102,11 @@ $all_categories = blog_get_categories($mysqli);
 
 <h2><?php echo $is_edit ? 'Edit Post' : 'New Post'; ?></h2>
 
+<div id="autosave-status">
+    <span id="autosave-indicator">&#9679;</span>
+    <span id="autosave-message">Auto-save enabled</span>
+</div>
+
 <?php if (!empty($error_message)): ?>
     <div class="error-message"><?php echo $error_message; ?></div>
 <?php endif; ?>
@@ -187,6 +192,9 @@ $all_categories = blog_get_categories($mysqli);
 
     <div style="margin-top: 20px;">
         <button type="submit" class="btn"><?php echo $is_edit ? 'Update Post' : 'Create Post'; ?></button>
+        <?php if ($is_edit): ?>
+            <a href="preview.php?id=<?php echo $post_id; ?>" class="btn btn-secondary" target="_blank">Preview</a>
+        <?php endif; ?>
         <a href="posts.php" class="btn btn-secondary">Cancel</a>
     </div>
 </form>
@@ -203,6 +211,14 @@ document.getElementById('title').addEventListener('blur', function() {
         slugField.value = slug;
     }
 });
+</script>
+
+<script src="/blog/admin/js/auto-save.js"></script>
+<script>
+AutoSave.init(
+    <?php echo json_encode($post_id); ?>,
+    <?php echo json_encode(admin_csrf_token()); ?>
+);
 </script>
 
 <?php require_once __DIR__ . '/footer.php'; ?>

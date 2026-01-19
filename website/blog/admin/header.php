@@ -167,6 +167,23 @@ $admin_page = isset($admin_page) ? $admin_page : '';
             display: table;
             clear: both;
         }
+        /* Auto-save status indicator */
+        #autosave-status {
+            font-size: 12px;
+            padding: 5px 10px;
+            background-color: #ffffcc;
+            border: 1px solid #cccc00;
+            margin-bottom: 15px;
+        }
+        .autosave-saving {
+            color: #996600;
+        }
+        .autosave-saved {
+            color: #006600;
+        }
+        .autosave-error {
+            color: #cc0000;
+        }
     </style>
 </head>
 <body>

@@ -78,6 +78,9 @@ $success = isset($_GET['success']) ? $_GET['success'] : '';
                         <?php if ($post['status'] === 'published'): ?>
                             <a href="../post.php?slug=<?php echo urlencode($post['slug']); ?>"
                                class="btn btn-small btn-secondary" target="_blank">View</a>
+                        <?php else: ?>
+                            <a href="preview.php?id=<?php echo $post['id']; ?>"
+                               class="btn btn-small btn-secondary" target="_blank">Preview</a>
                         <?php endif; ?>
                         <a href="post-delete.php?id=<?php echo $post['id']; ?>"
                            class="btn btn-small btn-danger">Delete</a>

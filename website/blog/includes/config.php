@@ -25,3 +25,7 @@ define('ADMIN_LOCKOUT_TIME', 900); // 15 minutes
 
 // Excerpt settings
 define('BLOG_EXCERPT_LENGTH', 300);
+
+// Auto-save settings
+define('AUTOSAVE_DEBOUNCE_MS', 5000); // 5 seconds after last keystroke
+define('AUTOSAVE_LOCAL_STORAGE_PREFIX', 'blog_autosave_');
