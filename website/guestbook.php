@@ -72,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_entry'])) {
             $stmt->bind_param("ssssss", $name, $email, $homepage, $location, $message, $visitor_ip);
 
             if ($stmt->execute()) {
-                $success_message = "Thank you for signing my guestbook!";
+                $success_message = "Thank you for signing my guestbook! Your entry has been submitted and will appear after approval.";
                 $name = $email = $homepage = $location = $message = '';
             } else {
                 $error_message = "Sorry, there was an error saving your entry. Please try again.";

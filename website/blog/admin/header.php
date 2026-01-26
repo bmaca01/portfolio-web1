@@ -203,6 +203,7 @@ $admin_page = isset($admin_page) ? $admin_page : '';
             <a href="categories.php" class="<?php echo $admin_page === 'categories' ? 'active' : ''; ?>">Categories</a>
             <a href="images.php" class="<?php echo $admin_page === 'images' ? 'active' : ''; ?>">Images</a>
             <a href="messages.php" class="<?php echo $admin_page === 'messages' ? 'active' : ''; ?>">Messages</a>
+            <a href="guestbook.php" class="<?php echo $admin_page === 'guestbook' ? 'active' : ''; ?>">Guestbook</a>
         </div>
 
         <div class="admin-content">
