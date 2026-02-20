@@ -54,7 +54,7 @@ include 'includes/page-header.php';
 <br>
 
 <h2 class="section-heading">
-    <a href="#">Jira Clone<em style="font-size: 12pt"> (in progress)</em></a>
+    <a href="https://task-tracker.benjmacaro.dev/">Jira Clone<em style="font-size: 12pt"> (in progress)</em></a>
 </h2>
 <p class="body-text">
     <strong>Type:</strong> Full Stack Application<br>
